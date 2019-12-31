@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.6 on win32)" generated="20191231 14:13:15.378" rpa="false">
+<suite id="s1" name="Test1" source="C:\Users\tvdien\PycharmProjects\REST\tests\test1.robot">
+<test id="s1-t1" name="GET an existing user, notice how the schema gets more accurate">
+<kw name="Get" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<arguments>
+<arg>/users/1</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:15.740" endtime="20191231 14:13:16.161"></status>
+</kw>
+<kw name="Object" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON object.*</doc>
+<arguments>
+<arg>response body</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.162" endtime="20191231 14:13:16.163"></status>
+</kw>
+<kw name="Object" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON object.*</doc>
+<arguments>
+<arg>response body</arg>
+<arg>required=["id", "name"]</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.164" endtime="20191231 14:13:16.165"></status>
+</kw>
+<kw name="Integer" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON integer.*</doc>
+<arguments>
+<arg>response body id</arg>
+<arg>1</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.165" endtime="20191231 14:13:16.166"></status>
+</kw>
+<kw name="String" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON string.*</doc>
+<arguments>
+<arg>response body name</arg>
+<arg>Leanne Graham</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.166" endtime="20191231 14:13:16.166"></status>
+</kw>
+<tags>
+<tag>a</tag>
+</tags>
+<status status="PASS" starttime="20191231 14:13:15.739" endtime="20191231 14:13:16.167" critical="yes"></status>
+</test>
+<test id="s1-t2" name="GET users use JsonPath">
+<kw name="Get" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<arguments>
+<arg>/users?_limit=5</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191231 14:13:16.343" level="INFO">${response} = {'seconds': 0.16537000000000002, 'status': 200, 'body': [{'id': 1, 'name': 'Leanne Graham', 'username': 'Bret', 'email': 'Sincere@april.biz', 'address': {'street': 'Kulas Light', 'suite': 'Apt. 556', ...</msg>
+<status status="PASS" starttime="20191231 14:13:16.168" endtime="20191231 14:13:16.343"></status>
+</kw>
+<kw name="Array" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON array.*</doc>
+<arguments>
+<arg>response body</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.343" endtime="20191231 14:13:16.351"></status>
+</kw>
+<kw name="Integer" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON integer.*</doc>
+<arguments>
+<arg>$[0].id</arg>
+<arg>1</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.352" endtime="20191231 14:13:16.394"></status>
+</kw>
+<kw name="String" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON string.*</doc>
+<arguments>
+<arg>$[0]..lat</arg>
+<arg>-37.3159</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.395" endtime="20191231 14:13:16.413"></status>
+</kw>
+<kw name="Integer" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON integer.*</doc>
+<arguments>
+<arg>$..id</arg>
+<arg>maximum=5</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:16.414" endtime="20191231 14:13:16.434"></status>
+</kw>
+<kw name="Output" library="REST" type="teardown">
+<tags>
+<tag>I/O</tag>
+</tags>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<arguments>
+<arg>$[*].email</arg>
+</arguments>
+<msg timestamp="20191231 14:13:16.453" level="INFO">
+[
+    "Sincere@april.biz",
+    "Shanna@melissa.tv",
+    "Nathan@yesenia.net",
+    "Julianne.OConner@kory.org",
+    "Lucio_Hettinger@annie.ca"
+]</msg>
+<status status="PASS" starttime="20191231 14:13:16.434" endtime="20191231 14:13:16.461"></status>
+</kw>
+<status status="PASS" starttime="20191231 14:13:16.168" endtime="20191231 14:13:16.461" critical="yes"></status>
+</test>
+<test id="s1-t3" name="POST with valid params to create a new user">
+<kw name="Post" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a POST request to the endpoint.*</doc>
+<arguments>
+<arg>/users</arg>
+<arg>${json}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191231 14:13:17.334" level="INFO">${response} = {'seconds': 0.8656159999999999, 'status': 201, 'body': {'id': 11, 'name': 'Gil Alexander'}, 'headers': {'Date': 'Tue, 31 Dec 2019 07:13:17 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Con...</msg>
+<status status="PASS" starttime="20191231 14:13:16.463" endtime="20191231 14:13:17.334"></status>
+</kw>
+<kw name="Integer" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON integer.*</doc>
+<arguments>
+<arg>response status</arg>
+<arg>201</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:17.334" endtime="20191231 14:13:17.335"></status>
+</kw>
+<kw name="Output" library="REST" type="teardown">
+<tags>
+<tag>I/O</tag>
+</tags>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<arguments>
+<arg>response body</arg>
+<arg>${OUTPUTDIR}/new_user.demo.json</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:17.335" endtime="20191231 14:13:17.336"></status>
+</kw>
+<tags>
+<tag>b</tag>
+</tags>
+<status status="PASS" starttime="20191231 14:13:16.462" endtime="20191231 14:13:17.336" critical="yes"></status>
+</test>
+<test id="s1-t4" name="PUT with valid params to update the existing user">
+<kw name="Put" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a PUT request to the endpoint.*</doc>
+<arguments>
+<arg>/users/2</arg>
+<arg>{"isCoding":true}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191231 14:13:18.307" level="INFO">${response} = {'seconds': 0.96486, 'status': 200, 'body': {'isCoding': True, 'id': 2}, 'headers': {'Date': 'Tue, 31 Dec 2019 07:13:18 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '33',...</msg>
+<status status="PASS" starttime="20191231 14:13:17.337" endtime="20191231 14:13:18.307"></status>
+</kw>
+<kw name="Boolean" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON boolean.*</doc>
+<arguments>
+<arg>response body isCoding</arg>
+<arg>true</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:18.308" endtime="20191231 14:13:18.308"></status>
+</kw>
+<kw name="Put" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a PUT request to the endpoint.*</doc>
+<arguments>
+<arg>/users/2</arg>
+<arg>{"sleep":null}</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:18.308" endtime="20191231 14:13:19.130"></status>
+</kw>
+<kw name="Null" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON null.*</doc>
+<arguments>
+<arg>response body sleep</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:19.130" endtime="20191231 14:13:19.131"></status>
+</kw>
+<kw name="Put" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a PUT request to the endpoint.*</doc>
+<arguments>
+<arg>/users/2</arg>
+<arg>{"pockets":"","money":0.05}</arg>
+</arguments>
+<assign>
+<var>${res1}</var>
+</assign>
+<msg timestamp="20191231 14:13:19.723" level="INFO">${res1} = {'seconds': 0.5894940000000001, 'status': 200, 'body': {'pockets': '', 'money': 0.05, 'id': 2}, 'headers': {'Date': 'Tue, 31 Dec 2019 07:13:19 GMT', 'Content-Type': 'application/json; charset=utf-8', ...</msg>
+<status status="PASS" starttime="20191231 14:13:19.131" endtime="20191231 14:13:19.723"></status>
+</kw>
+<kw name="String" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON string.*</doc>
+<arguments>
+<arg>response body pockets</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:19.724" endtime="20191231 14:13:19.725"></status>
+</kw>
+<kw name="Number" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON number.*</doc>
+<arguments>
+<arg>response body money</arg>
+<arg>0.05</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:19.725" endtime="20191231 14:13:19.725"></status>
+</kw>
+<kw name="Missing" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field does not exist.*</doc>
+<arguments>
+<arg>response body moving</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:19.726" endtime="20191231 14:13:19.726"></status>
+</kw>
+<status status="PASS" starttime="20191231 14:13:17.337" endtime="20191231 14:13:19.727" critical="yes"></status>
+</test>
+<test id="s1-t5" name="PATCH with valid params">
+<kw name="Get" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<arguments>
+<arg>/users/3</arg>
+</arguments>
+<assign>
+<var>&amp;{res}</var>
+</assign>
+<msg timestamp="20191231 14:13:20.041" level="INFO">&amp;{res} = { seconds=0.303072 | status=200 | body={'id': 3, 'name': 'Clementine Bauch', 'username': 'Samantha', 'email': 'Nathan@yesenia.net', 'address': {'street': 'Douglas Extension', 'suite': 'Suite 847', 'ci...</msg>
+<status status="PASS" starttime="20191231 14:13:19.728" endtime="20191231 14:13:20.042"></status>
+</kw>
+<kw name="String" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON string.*</doc>
+<arguments>
+<arg>$.name</arg>
+<arg>Clementine Bauch</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:20.043" endtime="20191231 14:13:20.080"></status>
+</kw>
+<kw name="Patch" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a PATCH request to the endpoint.*</doc>
+<arguments>
+<arg>/users/4</arg>
+<arg>{"name":"${res.body['name']}"}</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:20.081" endtime="20191231 14:13:21.009"></status>
+</kw>
+<kw name="String" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON string.*</doc>
+<arguments>
+<arg>$.name</arg>
+<arg>Clementine Bauch</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:21.010" endtime="20191231 14:13:21.029"></status>
+</kw>
+<kw name="Patch" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a PATCH request to the endpoint.*</doc>
+<arguments>
+<arg>/users/5</arg>
+<arg>${dict}</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:21.030" endtime="20191231 14:13:22.183"></status>
+</kw>
+<kw name="String" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON string.*</doc>
+<arguments>
+<arg>$.name</arg>
+<arg>${dict.name}</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:22.183" endtime="20191231 14:13:22.202"></status>
+</kw>
+<status status="PASS" starttime="20191231 14:13:19.728" endtime="20191231 14:13:22.203" critical="yes"></status>
+</test>
+<test id="s1-t6" name="DELETE the existing successfully,save history of all requests">
+<kw name="Delete" library="REST">
+<tags>
+<tag>http</tag>
+</tags>
+<doc>*Sends a DELETE request to the endpoint.*</doc>
+<arguments>
+<arg>/users/6</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:22.204" endtime="20191231 14:13:23.186"></status>
+</kw>
+<kw name="Integer" library="REST">
+<tags>
+<tag>assertions</tag>
+</tags>
+<doc>*Asserts the field as JSON integer.*</doc>
+<arguments>
+<arg>response status</arg>
+<arg>200</arg>
+<arg>202</arg>
+<arg>204</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:23.187" endtime="20191231 14:13:23.188"></status>
+</kw>
+<kw name="Rest Instances" library="REST">
+<tags>
+<tag>I/O</tag>
+</tags>
+<doc>*Writes the instances as JSON to a file.*</doc>
+<arguments>
+<arg>${OUTPUTDIR}/all.demo.json</arg>
+</arguments>
+<status status="PASS" starttime="20191231 14:13:23.189" endtime="20191231 14:13:23.196"></status>
+</kw>
+<tags>
+<tag>c</tag>
+</tags>
+<status status="PASS" starttime="20191231 14:13:22.204" endtime="20191231 14:13:23.196" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20191231 14:13:15.380" endtime="20191231 14:13:23.197"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="0">Critical Tests</stat>
+<stat pass="6" fail="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0">a</stat>
+<stat pass="1" fail="0">b</stat>
+<stat pass="1" fail="0">c</stat>
+</tag>
+<suite>
+<stat pass="6" fail="0" id="s1" name="Test1">Test1</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
